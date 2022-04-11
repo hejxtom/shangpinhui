@@ -56,23 +56,27 @@ export default {
   name: "Header",
   data() {
     return {
-      keyword: '',
+      keyword: "",
     };
   },
   methods: {
-    
     toSearch() {
-      let loction={
+      let loction = {
         name: "search",
-        params: { keyword: this.keyword || undefined},
-      }
+        params: { keyword: this.keyword || undefined },
+      };
       //判断是否含有query参数
-      if(this.$route.query){
-        loction.query=this.$route.query
+      if (this.$route.query) {
+        loction.query = this.$route.query;
       }
-      
+
       this.$router.push(loction);
     },
+  },
+  mounted() {
+    this.$bus.$on("clear", () => {
+      this.keyword = "";
+    });
   },
 };
 </script>
