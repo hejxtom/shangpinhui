@@ -6,10 +6,13 @@ import VueRouter from "vue-router";
 // 引入路由器
 import router from "./router";
 
+// 全局组件只需要引用一次，所有组件共用
 // 引入三级联动组件---全局组件
 import TypeNav from "@/components/TypeNav";
 
 import Carousel from "@/components/Carousel";
+
+import Pagination from "@/components/Pagination"
 
 //引入仓库
 import store from "./store";
@@ -27,6 +30,7 @@ Vue.use(VueRouter);
 Vue.component(TypeNav.name, TypeNav);
 
 Vue.component(Carousel.name, Carousel);
+Vue.component(Pagination.name,Pagination);
 
 //测试
 // import {reqSearchInfo} from './api'
