@@ -51,7 +51,7 @@
                           :key="c3.categoryId"
                         >
                           <a
-                            :data-categoryName="c1.categoryName"
+                            :data-categoryName="c3.categoryName"
                             :data-category3Id="c3.categoryId"
                             >{{ c3.categoryName }}</a
                           >

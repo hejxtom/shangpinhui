@@ -3,7 +3,7 @@
     <TypeNav />
     <div class="main">
       <div class="py-container">
-        <!--bread-->
+        <!--bread:面包屑-->
         <div class="bread">
           <ul class="fl sui-breadcrumb">
             <li>
@@ -19,45 +19,60 @@
             <li class="with-x" v-if="searchParam.keyword">
               {{ searchParam.keyword }}<i @click="removeKeyword">×</i>
             </li>
-             <!-- 品牌的面包屑 -->
+            <!-- 品牌的面包屑 -->
             <li class="with-x" v-if="searchParam.trademark">
               {{ searchParam.trademark }}<i @click="removeTrademark">×</i>
+            </li>
+            <!-- 商品售卖属性的面包屑 -->
+            <li
+              class="with-x"
+              v-for="(prop, index) in searchParam.props"
+              :key="index"
+            >
+              {{ prop.split(":")[1] }}
+              <i @click="removeProps(index)">×</i>
             </li>
           </ul>
         </div>
         <!--/bread-->
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo"/>
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
-          <!--  -->
+          <!-- 排序 -->
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: isSyn }" @click="changOrder(1)">
+                  <a
+                    >综合<span
+                      v-show="isSyn"
+                      class="iconfont"
+                      :class="{
+                        'icon-long-arrow-up': isAsc,
+                        'icon-long-arrow-down': !isAsc,
+                      }"
+                    ></span
+                  ></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{ active: !isSyn }" @click="changOrder(2)">
+                  <a
+                    >销量<span
+                      v-show="!isSyn"
+                      class="iconfont"
+                      :class="{
+                        'icon-long-arrow-up': isAsc,
+                        'icon-long-arrow-down': !isAsc,
+                      }"
+                    ></span
+                  ></a>
                 </li>
               </ul>
             </div>
           </div>
-          <!-- / -->
-          <!--  -->
+          <!-- /排序 -->
+          <!-- 商品 -->
           <div class="goods-list">
             <ul class="yui3-g">
               <li
@@ -100,7 +115,7 @@
               </li>
             </ul>
           </div>
-          <!-- / -->
+          <!-- /商品 -->
           <!-- 分页 -->
           <div class="fr page">
             <div class="sui-pagination clearfix">
@@ -173,6 +188,16 @@ export default {
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    // 1:代表综合
+    // 2:代表价格
+    // 3:asc代表升序
+    // 4:desc代表降序
+    isSyn() {
+      return this.searchParam.order.indexOf("1") != -1;
+    },
+    isAsc() {
+      return this.searchParam.order.indexOf("asc") != -1;
+    },
   },
   //在挂载之前调用一次|可以在发请求之前将带有参数进行修改
   beforeMount() {
@@ -217,20 +242,55 @@ export default {
       }
     },
     //自定义事件回调
-    trademarkInfo(trademark,a,b,c){
+    trademarkInfo(trademark, a, b, c) {
       // console.log(trademark)
       // //1:整理品牌字段的参数  "ID:品牌名称"
-      this.searchParam.trademark=`${trademark.tmId}:${trademark.tmName}`
-       //再次发请求获取search模块列表数据进行展示
+      this.searchParam.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      //再次发请求获取search模块列表数据进行展示
       this.getData();
     },
     //删除品牌的信息
-    removeTrademark(){
-       //将品牌信息置空
-      this.searchParam.trademark=''
+    removeTrademark() {
+      //将品牌信息置空
+      this.searchParam.trademark = "";
       //再次发送请求
-      this.getData()
-    }
+      this.getData();
+    },
+    //收集平台属性地方回调函数（自定义事件）
+    attrInfo(prop) {
+      //数组去重
+      if (this.searchParam.props.indexOf(prop) === -1) {
+        this.searchParam.props.push(prop);
+      }
+      //再次发请求
+      this.getData();
+    },
+    //删除商品售卖信息
+    removeProps(index) {
+      this.searchParam.props.splice(index, 1);
+      this.getData();
+    },
+     //排序的操作
+    changOrder(flag) {
+      //flag:用户每一次点击li标签的时候，用于区分是综合（1）还是价格（2）
+      //现获取order初始状态【咱们需要通过初始状态去判断接下来做什么】
+      let originOrder = this.searchParam.order;
+      let orginsFlag = originOrder.split(":")[0];
+      let originSort = originOrder.split(":")[1];
+      //新的排序方式
+      let newOrder = "";
+      //判断的是多次点击的是不是同一个按钮
+      if (flag == orginsFlag) {
+        newOrder = `${orginsFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        //点击不是同一个按钮
+        newOrder = `${flag}:${"desc"}`;
+      }
+      //需要给order重新赋值
+      this.searchParam.order = newOrder;
+      //再次发请求
+      this.getData();
+    },
   },
   //数据监听：监听组件实例身上的属性的属性值变化
   watch: {
