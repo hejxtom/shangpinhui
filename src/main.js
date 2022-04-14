@@ -36,8 +36,8 @@ Vue.component(Pagination.name,Pagination);
 
 
 //测试
-// import {reqSearchInfo} from './api'
-// reqSearchInfo({})
+// import {reqGoodsInfo} from './api'
+// reqGoodsInfo(23)
 
 Vue.config.productionTip = false;
 

@@ -31,7 +31,17 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
  完成：
     商品详情页静态组件
     路由模块化（routers.js）
-    加入滚动行为（scrollBehavior）
+    （在router/index.js）加入滚动行为（scrollBehavior）
+
+### 完成Detail组件的动态数据渲染
+完成
+    Detail组件的vuex:
+        1.写请求的地址api
+        2.完成vuex三部曲（actions、state、mutations）
+        3.挂载时发送请求
+    Detail组件的数据渲染：
+        *注意点：
+            vuex数据仓库需要写成的 state.goodsInfo.categoryView || {}
 
 # 总结
 
