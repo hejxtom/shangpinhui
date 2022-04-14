@@ -82,9 +82,9 @@
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img :src="goods.defaultImg"
-                    /></a>
+                    <router-link :to="`/detail/${goods.id}`">
+                      <img :src="goods.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>

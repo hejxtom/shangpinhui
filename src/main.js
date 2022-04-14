@@ -14,6 +14,7 @@ import Carousel from "@/components/Carousel";
 
 import Pagination from "@/components/Pagination"
 
+
 //引入仓库
 import store from "./store";
 
@@ -30,7 +31,9 @@ Vue.use(VueRouter);
 Vue.component(TypeNav.name, TypeNav);
 
 Vue.component(Carousel.name, Carousel);
+
 Vue.component(Pagination.name,Pagination);
+
 
 //测试
 // import {reqSearchInfo} from './api'
