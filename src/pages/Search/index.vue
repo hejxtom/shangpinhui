@@ -117,7 +117,13 @@
           </div>
           <!-- /商品 -->
           <!-- 分页 -->
-         <Pagination/>
+          <Pagination
+            :pageNo="searchParam.pageNo"
+            :pageSize="searchParam.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="getPageNo"
+          />
           <!-- /分页 -->
         </div>
         <!--/details-->
@@ -128,7 +134,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
   components: {
@@ -170,6 +176,9 @@ export default {
     isAsc() {
       return this.searchParam.order.indexOf("asc") != -1;
     },
+    ...mapState({
+      total: (state) => state.search.searchList.total,
+    }),
   },
   //在挂载之前调用一次|可以在发请求之前将带有参数进行修改
   beforeMount() {
@@ -242,7 +251,7 @@ export default {
       this.searchParam.props.splice(index, 1);
       this.getData();
     },
-     //排序的操作
+    //排序的操作
     changOrder(flag) {
       //flag:用户每一次点击li标签的时候，用于区分是综合（1）还是价格（2）
       //现获取order初始状态【咱们需要通过初始状态去判断接下来做什么】
@@ -262,6 +271,14 @@ export default {
       this.searchParam.order = newOrder;
       //再次发请求
       this.getData();
+    },
+    //点击页码回调函数
+    getPageNo(pageNo) {
+      // console.log(pageNo)
+      if (this.searchParam.pageNo != pageNo) {
+        this.searchParam.pageNo = pageNo;
+        this.getData();
+      }
     },
   },
   //数据监听：监听组件实例身上的属性的属性值变化
