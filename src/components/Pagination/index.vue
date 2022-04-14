@@ -31,7 +31,7 @@ export default {
     },
     //计算出连续的页码的起始数字与结束数字[连续页码的数字:至少是5]
     startNumAndEndNum() {
-      //解构 -- 不用写this.
+      //解构出当前页、页面大小（多少条数据）、总数据数、总页数 -- 不用写this.
       const { pageNo, pageSize, total, continues, totalPage } = this;
       let start = 0,
         end = 0;
