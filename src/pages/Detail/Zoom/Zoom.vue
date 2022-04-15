@@ -13,12 +13,26 @@
   export default {
     name: "Zoom",
     props:['skuImageList'],
+    data() {
+      return {
+        currentIndex:0
+      }
+    },
+    mounted() {
+      this.$bus.$on('getIndex',this.getIndex)
+    },
     computed:{
       imgObj(){
         // 防止传入的skuImageList=[]报错
-        return this.skuImageList[0] || {}
+        return this.skuImageList[this.currentIndex] || {}
       }
-    }
+    },
+    methods: {
+      //修改图片索引回调函数
+      getIndex(index){
+        this.currentIndex=index
+      }
+    },
   }
 </script>
 
