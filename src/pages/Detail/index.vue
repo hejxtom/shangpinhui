@@ -85,12 +85,17 @@
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
                 <dd
                   changepirce="0"
-                  :class="{ active: spuSaleAttrValue.isChecked === '1' }"
+                  :class="{ active: spuSaleAttrValue.isChecked == 1 }"
                   v-for="(
                     spuSaleAttrValue, index
                   ) in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
-                  @click="changeActive(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)"
+                  @click="
+                    changeActive(
+                      spuSaleAttrValue,
+                      spuSaleAttr.spuSaleAttrValueList
+                    )
+                  "
                 >
                   {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
@@ -98,9 +103,19 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model.number="skuNum"
+                  @change="changeSkuNum"
+                />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : (skuNum = 1)"
+                  >-</a
+                >
               </div>
               <div class="add">
                 <a href="javascript:">加入购物车</a>
@@ -347,6 +362,11 @@ import Zoom from "./Zoom/Zoom";
 import { mapGetters } from "vuex";
 export default {
   name: "Detail",
+  data() {
+    return {
+      skuNum: 1,
+    };
+  },
   components: {
     ImageList,
     Zoom,
@@ -365,14 +385,24 @@ export default {
   },
   methods: {
     //售卖属性切换
-    changeActive(spuSaleAttrValue,spuSaleAttrValueList){
+    changeActive(spuSaleAttrValue, spuSaleAttrValueList) {
       // console.log(spuSaleAttrValue,spuSaleAttrValueList)
       //让所有元素都不高亮（isChecked="0"）
-      spuSaleAttrValueList.forEach(item => {
-        item.isChecked="0"
+      spuSaleAttrValueList.forEach((item) => {
+        item.isChecked = "0";
       });
       //点击的元素高亮
-      spuSaleAttrValue.isChecked="1"
+      spuSaleAttrValue.isChecked = "1";
+    },
+    changeSkuNum(event){
+      // console.log(event)
+      // 获取输入的值
+      let value=event.target.value*1
+      if(isNaN(value) || value<1){ //输入非法字符 || 负数
+        this.skuNum=1
+      }else{ 
+        this.skuNum=parseInt(value) //防止小数
+      }
     }
   },
 };

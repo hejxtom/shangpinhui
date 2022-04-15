@@ -45,6 +45,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### 完成Detail组件的动态数据渲染(售卖属性、子组件)
 1. 完成：
     * 售卖属性、子组件动态数据渲染
-
+    * 放大镜（重要）、商品数量
+    * 商品详情页开发完成
 # 总结
 
