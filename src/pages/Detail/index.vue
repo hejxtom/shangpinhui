@@ -118,7 +118,7 @@
                 >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a href="javascript:" @click="addShopcar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -394,6 +394,7 @@ export default {
       //点击的元素高亮
       spuSaleAttrValue.isChecked = "1";
     },
+    //表单元素修改产品个数
     changeSkuNum(event){
       // console.log(event)
       // 获取输入的值
@@ -403,6 +404,19 @@ export default {
       }else{ 
         this.skuNum=parseInt(value) //防止小数
       }
+    },
+    //加入购物车
+    async addShopcar(){
+       //1:在点击加入购物车这个按钮的时候，做的第一件事情，将参数带给服务器（发请求），通知服务器加入购车的产品是谁
+      //this.$store.dispatch('addOrUpdateShopCart'),说白了，它是在调用vuex仓库中的这个addOrUpdateShopCart函数。
+      //2:你需要知道这次请求成功还是失败，如果成功进行路由跳转，如果失败，需要给用户提示
+      try {
+         await this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuid,skuNum:this.skuNum})
+      } catch (error) {
+        //失败
+        alert(error.message);
+      }
+
     }
   },
 };
