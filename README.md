@@ -52,5 +52,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     * 点击加入购物车后，发送请求
         + 注意：async+await的配合使用
         + 注意：此步骤发送请求后，要返回成功或者失败的标志（失败抛出异常）
+    * 如何传递对象到其他页面？
+        - 路由的query参数（不推荐）
+        - 会话存储 
+            * 注意：本地存储 vs 会话存储
+### 完成购物车静态页面
 # 总结
 

@@ -4,6 +4,8 @@ import Login from "@/pages/Login";
 import Search from "@/pages/Search";
 import Register from "@/pages/Register";
 import Detail from "@/pages/Detail";
+import AddCartSuccess from "@/pages/AddCartSuccess";
+import ShopCart from '@/pages/ShopCart'
 
 export default [
   {
@@ -30,6 +32,16 @@ export default [
     name: "detail",
     path: "/detail/:skuid",
     component: Detail,
+  },
+  {
+    name: "addCartSuccess",
+    path: "/addCartSuccess",
+    component: AddCartSuccess,
+  },
+  {
+    name: "shopCart",
+    path: "/shopCart",
+    component: ShopCart,
   },
   {
     path: "/register",
