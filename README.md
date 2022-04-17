@@ -57,5 +57,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
         - 会话存储 
             * 注意：本地存储 vs 会话存储
 ### 完成购物车静态页面
+1. 完成：
+    * 购物车静态页面
+    * 动态数据展示
+    * 商品数量更改
 # 总结
 

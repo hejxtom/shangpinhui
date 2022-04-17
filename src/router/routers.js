@@ -32,11 +32,13 @@ export default [
     name: "detail",
     path: "/detail/:skuid",
     component: Detail,
+    meta: { isShow: true },
   },
   {
     name: "addCartSuccess",
     path: "/addCartSuccess",
     component: AddCartSuccess,
+    meta: { isShow: true },
   },
   {
     name: "shopCart",

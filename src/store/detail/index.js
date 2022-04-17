@@ -1,8 +1,9 @@
 import { reqGoodsInfo, reqAddOrUpdateShopCart } from '@/api'
-
+import {getUUID} from '@/utils/uuid_token'
 //商品详情页数据仓库
 const state = {
-    goodsInfo: {}
+    goodsInfo: {},
+    uuid_token:getUUID()
 }
 const actions = {
     //获取产品信息的action
