@@ -14,12 +14,12 @@ let requests = axios.create({
 //请求拦截器----在项目中发起请求（请求没有发出去）可以做一些事情
 requests.interceptors.request.use((config) => {
     //现在的问题是config是什么?配置对象
-    // 进度条开始
-    nprogress.start()
     if (store.state.detail.uuid_token) {
         //请求头添加一个字段(userTempId):和后台老师商量好了
         config.headers.userTempId = store.state.detail.uuid_token
     }
+    // 进度条开始
+    nprogress.start()
     return config
 })
 //响应拦截器----当服务器手动请求之后，做出响应（响应成功）会执行

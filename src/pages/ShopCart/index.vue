@@ -24,6 +24,7 @@
               type="checkbox"
               name="chk_list"
               :checked="cartInfo.isChecked == 1"
+              @click="updateChecked(cartInfo.skuId, $event)"
             />
           </li>
           <li class="cart-list-con2">
@@ -59,7 +60,12 @@
             <span class="sum">{{ cartInfo.cartPrice * cartInfo.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a
+              href="/"
+              class="sindelet"
+              @click.prevent="deleteCartById(cartInfo.skuId)"
+              >删除</a
+            >
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -70,11 +76,16 @@
     <!-- 底部 -->
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllCheck" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isAllCheck && cartInfoList.length > 0"
+          @click="updateAllCartChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a href="#none" @click.prevent="deleteAllChecked">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -95,6 +106,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import throttle from "lodash/throttle";
 export default {
   name: "ShopCart",
   mounted() {
@@ -130,7 +142,7 @@ export default {
     type:为了区分这三个元素
     disNum形参:+ 变化量（1）  -变化量（-1）   input最终的个数（并不是变化量）
     cartInfo:哪一个产品【身上有id】 */
-    async handler(type, disNum, cartInfo) {
+    handler: throttle(async function (type, disNum, cartInfo) {
       // console.log(">>>", type, disNum, cartInfo);
       switch (type) {
         case "add":
@@ -144,7 +156,7 @@ export default {
           // }
           //判断产品的个数大于1，才可以传递给服务器-1
           //如果出现产品的个数小于等于1，传递给服务器个数0（原封不动）
-          disNum = cart.skuNum > 1 ? -1 : 0;
+          disNum = cartInfo.skuNum > 1 ? -1 : 0;
           break;
         case "change":
           //用户输入进来的最终量，如果非法的（带有汉字|出现负数），带给服务器数字零
@@ -168,7 +180,60 @@ export default {
       } catch (error) {
         alert("请求失败");
       }
+    }, 70),
+
+    //删除购物车某一个产品
+    async deleteCartById(skuId) {
+      try {
+        //如果删除成功再次发请求获取新的数据进行展示
+        await this.$store.dispatch("deleteCartListBySkuId", skuId);
+        //成功后查询
+        this.getData();
+      } catch (error) {
+        alert("删除失败");
+      }
     },
+
+    //修改某个产品的勾选状态
+    async updateChecked(skuId, event) {
+      let isChecked = event.target.checked ? "1" : "0";
+      try {
+        await this.$store.dispatch("updateCheckedById", {
+          skuId: skuId,
+          isChecked: isChecked,
+        });
+        //成功后查询
+        this.getData();
+      } catch (error) {
+        alert("修改勾选状态失败");
+      }
+    },
+
+    // 删除全部选中的商品
+    async deleteAllChecked() {
+      try {
+        //派发一个action
+        await this.$store.dispatch("deleteAllChecked");
+        //再发请求获取购物车列表
+        this.getData();
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+
+    // 修改全部产品的选中状态
+    async updateAllCartChecked(event){
+      let isChecked=event.target.checked? '1':'0'
+      try {
+        await this.$store.dispatch('updateAllCartIsChecked', isChecked)
+
+        // 发送请求
+        this.getData()
+      } catch (error) {
+        alert('修改全部状态失败！')
+      }
+      // console.log(event)
+    }
   },
 };
 </script>

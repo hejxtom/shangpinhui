@@ -61,5 +61,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     * 购物车静态页面
     * 动态数据展示
     * 商品数量更改
+### 完成购物车业务逻辑(未登录)
+1. 完成：
+    * 商品状态修改
+    * 商品删除（单个、全部）
+    * 商品数量
 # 总结
 
