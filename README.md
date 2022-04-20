@@ -66,5 +66,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     * 商品状态修改
     * 商品删除（单个、全部）
     * 商品数量
+### 完成登录注册静态页面
+1. 完成：
+    * 登录注册静态页面
+    * 登录页面图片引用：url(~@/assets/icons.png) no-repeat -10px -201px;
 # 总结
 
