@@ -14,6 +14,7 @@ export default [
     meta: { isShow: true },
   },
   {
+    name:'login',
     path: "/login",
     component: Login,
   },
@@ -44,6 +45,7 @@ export default [
     name: "shopCart",
     path: "/shopCart",
     component: ShopCart,
+    meta: { isShow: true },
   },
   {
     path: "/register",

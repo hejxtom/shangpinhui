@@ -70,5 +70,33 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 1. 完成：
     * 登录注册静态页面
     * 登录页面图片引用：url(~@/assets/icons.png) no-repeat -10px -201px;
+### 完成登陆注册
+1. 完成：
+    * 注册
+    * 登录
+
+
+
 # 总结
+### 要点：
+1. 路由传参
+    * params参数：路由需要占位，程序就崩了，属于URL当中一部分
+    * query参数：路由不需要占位，写法类似于ajax当中query参数
+    * 路由传递参数相关面试题
+        1. 路由跳转传递参数（对象式写法）path是否可以结合params参数一起使用?
+            + 答：不可以：不能这样书写，程序会崩掉
+        2. 如何指定params参数可传可不传? 
+            * 答：
+                - 如果路由要求传递params参数，但是你就不传递params参数,发现一件事，URL会有问题
+                - 在配置路由的时候，在占位符后面加上一个[问号]，表示params可以传递或者不传递。例：/seach/:keword?
+        3. params参数可以传递也可以不传递，但是如果传递是空串,路径会出问题。如何解决？
+            * 答：使用undefined。例：params:{keyword:''||undefined}
+        4. 如果指定name与params配置, 但params中数据是一个"", 无法跳转，路径会出问题
+
+        5. 路由组件能不能传递props数据?
+        * 答：可以，有三种：布尔值写法、对象写法、函数写法
+2. 组件通信-----（工作使用频率非常高、面试的时候经常出现）
+* 父->子:props、插槽、ref
+* 子->父：自定义事件
+* 万能：vuex、$bus、pubsub
 
