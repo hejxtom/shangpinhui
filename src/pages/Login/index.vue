@@ -26,7 +26,7 @@
               <div class="input-text clearFix">
                 <span class="pwd"></span>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="请输入密码"
                   v-model="password"
                 />

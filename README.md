@@ -74,6 +74,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 1. 完成：
     * 注册
     * 登录
+    * 通过token获取用户信息
+    * 退出登录
+
 
 
 
