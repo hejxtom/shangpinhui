@@ -76,13 +76,109 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     * 登录
     * 通过token获取用户信息
     * 退出登录
+### 完成支付相关静态组件
+1. 完成：
+    * （生成）订单
+    * 支付
+    * 支付成功
+    * 订单
+
 
 
 
 
 # 总结
-### 要点：
-1. 路由传参
+## 1. 环境搭建
+### 1. 创建工程
+* vue2：vue init webpack 项目的名字
+* vue3~4：vue create 项目名称
+
+### 2. 脚手架目录
++ node_modules:放置项目依赖的地方
++ public:一般放置一些共用的静态资源，打包上线的时候，public文件夹里面资源原封不动打包到dist文件夹里面
++ src：程序员源代码文件夹
+    - assets文件夹：经常放置一些静态资源（图片），assets文件夹里面资源webpack会进行打包为一个模块（js文件夹里面）
+    - components文件夹:一般放置非路由组件（或者项目共用的组件）
+    - App.vue 唯一的根组件
+    - main.js 入口文件【程序最先执行的文件】
++ babel.config.js:babel配置文件
++ package.json：看到项目描述、项目依赖、项目运行指令
++ README.md:项目说明文件
+### 3. 修改配置文件
+1. 浏览器自动打开
+```js
+在package.json文件中
+"scripts": {
+    "serve": "vue-cli-service serve --open",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+},
+```
+2. 关闭eslint校验工具
+```js
+创建vue.config.js文件：需要对外暴露
+module.exports = {
+   lintOnSave:false,
+}
+```
+3. src文件夹的别名的设置 
+* 因为项目大的时候src（源代码文件夹）：里面目录会很多，找文件不方便，设置src文件夹的别名的好处，找文件会方便一些
+```js
+创建jsconfig.json文件
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
+```
+## 2. 配置
+### 1. 路由的配置
+1. 项目结构
+    * 确定项目结构顺序:上中下 -----只有中间部分在发生变化，中间部分应该使用的是路由组件
+    * 2个非路由组件|四个路由组件
+        + 两个非路由组件：Header 、Footer
+        + 路由组件:Home、Search、Login（没有底部的Footer组件，带有二维码的）、Register（没有底部的Footer组件，带二维码的）
+    * 创建路由组件【一般放在views|pages文件夹】
+    * 配置路由，配置完四个路由组件
+2. 路由的跳转
+    * 路由的跳转就两种形式：
+        + 声明式导航（router-link：务必要有to属性）
+        + 编程式导航push||replace
+    * 编程式导航更好用：因为可以书写自己的业务逻辑
+3. 非路由组件使用分为几步:
+* 第一步：定义
+* 第二步：引入
+* 第三步：注册
+* 第四步:使用
+
+### 导入依赖
+1. 路由
+```js
+npm install --save vue-router@3
+--save:可以让你安装的依赖，在package.json文件当中进行记录
+``` 
+2. loader
+```js
+npm install --save less less-loader@5
+切记less-loader安装5版本的，不要安装在最新版本，安装最新版本less-loader会报错，报的错误setOption函数未定义
+```
+
+
+#### 要点：
+1. public 和 assets文件夹区别
+2. v-show与v-if区别?
+    * v-show:通过样式display控制
+    * v-if：通过元素上树与下树进行操作
+3. 路由传参
     * params参数：路由需要占位，程序就崩了，属于URL当中一部分
     * query参数：路由不需要占位，写法类似于ajax当中query参数
     * 路由传递参数相关面试题
@@ -98,6 +194,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
         5. 路由组件能不能传递props数据?
         * 答：可以，有三种：布尔值写法、对象写法、函数写法
+
+## 要点：
 2. 组件通信-----（工作使用频率非常高、面试的时候经常出现）
 * 父->子:props、插槽、ref
 * 子->父：自定义事件

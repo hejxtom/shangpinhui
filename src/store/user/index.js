@@ -44,7 +44,6 @@ const actions = {
     //获取用户信息
     async getUserInfo({ commit }) {
         let result = await reqUserInfo()
-        // console.log(result)
         if (result.code == 200) {
             commit('GETUSERINFO', result.data)
             return 'ok'
@@ -56,7 +55,6 @@ const actions = {
     // 退出登录
     async userLogout({commit}){
         let result=await reqUserLogout()
-        // console.log(result)
         if(result.code==200){
             // 发送mutation清空用户信息
             commit('CLEARUSERINFO')

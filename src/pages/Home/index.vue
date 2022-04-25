@@ -33,10 +33,6 @@ export default {
   mounted() {
     // 获取floor数据
     this.$store.dispatch("getFloorList");
-    // 根据token获取用户信息
-    if(this.$store.state.user.token){
-        this.$store.dispatch("getUserInfo");
-    }
   },
   computed: {
     ...mapState({

@@ -112,7 +112,7 @@ npm install --save vue-router@3
 
 项目采用的less样式,浏览器不识别less语法，需要一些loader进行处理，把less语法转换为CSS语法
 
-1：安装less less-loader@5 （npm install --save less less-loader）
+1：安装less less-loader@5 （npm install --save less less-loader@5）
 切记less-loader安装5版本的，不要安装在最新版本，安装最新版本less-loader会报错，报的错误setOption函数未定义
 
 2:需要在style标签的身上加上lang="less",不添加样式不生效
