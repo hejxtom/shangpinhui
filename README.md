@@ -82,6 +82,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     * 支付
     * 支付成功
     * 订单
+### 完成支付相关组件数据展示与发送请求
+1. 完成：
+    * （生成）订单动态数据展示
+    * 提交订单页
 
 
 

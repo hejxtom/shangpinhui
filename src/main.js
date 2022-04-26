@@ -24,6 +24,9 @@ import "@/mock/mockServe";
 //引入swiper样式
 import "swiper/css/swiper.css";
 
+// 引入API
+import * as API from '@/api'
+
 // 注册路由插件
 Vue.use(VueRouter);
 
@@ -32,7 +35,7 @@ Vue.component(TypeNav.name, TypeNav);
 
 Vue.component(Carousel.name, Carousel);
 
-Vue.component(Pagination.name,Pagination);
+Vue.component(Pagination.name, Pagination);
 
 
 //测试
@@ -46,6 +49,7 @@ new Vue({
   beforeCreate() {
     //全局事件总线
     Vue.prototype.$bus = this;
+    Vue.prototype.$API = API
   },
   //需要把router进行注册
   //可以让全部的组件（非路由|路由组件）都可以获取到$route|$router属性

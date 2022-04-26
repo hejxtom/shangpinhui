@@ -74,3 +74,7 @@ export const reqUserAddress = () => requests({ url: '/user/userAddress/auth/find
 //获取商品清单
 //URL:/api/order/auth/trade   method:get
 export const reqOrderInfo=()=>requests({url:'/order/auth/trade',method:'get'})
+
+//提交订单的接口
+//URL:/api/order/auth/submitOrder?tradeNo={tradeNo}  method:post
+export const reqSubmitOrder=(tradeNo,data)=>requests({url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,method:'post',data})
